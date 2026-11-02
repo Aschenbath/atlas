@@ -15,14 +15,15 @@ use std::path::Path;
 use std::process::Command;
 
 /// A `git` command isolated from the global and system config.
+///
+/// `/dev/null` on every platform: Git for Windows maps that spelling to the
+/// null device itself, while `GIT_CONFIG_GLOBAL=NUL` fails every command with
+/// "unable to access 'NUL': Invalid argument" (seen with 2.56.0.windows.1).
 pub fn git_command() -> Command {
     let mut cmd = Command::new("git");
-    cmd.env(
-        "GIT_CONFIG_GLOBAL",
-        if cfg!(windows) { "NUL" } else { "/dev/null" },
-    )
-    .env("GIT_CONFIG_NOSYSTEM", "1")
-    .env("GIT_TERMINAL_PROMPT", "0");
+    cmd.env("GIT_CONFIG_GLOBAL", "/dev/null")
+        .env("GIT_CONFIG_NOSYSTEM", "1")
+        .env("GIT_TERMINAL_PROMPT", "0");
     cmd
 }
 
