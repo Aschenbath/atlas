@@ -15,7 +15,7 @@ const SETTINGS_DOCS: &[(&str, &str)] = &[
     ),
     (
         "logRetentionDays",
-        "# How many days of Atlas's own log files to keep. A new file starts each day,\n# and files past this count are deleted. Must be between 1 and 90. (default:\n# 7)",
+        "# How many days of Atlas's own log files to keep. A new file starts each day,\n# and files past this count are deleted. Must be between 1 and 90. Takes\n# effect the next time Atlas starts. (default: 7)",
     ),
     (
         "showHiddenFiles",

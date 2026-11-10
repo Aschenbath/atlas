@@ -89,7 +89,7 @@
       "max": 90,
       "applies": "next launch",
       "default": "7",
-      "doc": "How many days of Atlas's own log files to keep. A new file starts each day, and files past this count are deleted. Must be between 1 and 90.",
+      "doc": "How many days of Atlas's own log files to keep. A new file starts each day, and files past this count are deleted. Must be between 1 and 90. Takes effect the next time Atlas starts.",
       "validation": "1 ≤ n ≤ 90"
     },
     {

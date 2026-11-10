@@ -21,7 +21,7 @@ export interface AppSettings {
   enableAtlasLogs: boolean;
   /**
    * How many days of Atlas's own log files to keep. A new file starts each day, and files past
-   * this count are deleted. Must be between 1 and 90.
+   * this count are deleted. Must be between 1 and 90. Takes effect the next time Atlas starts.
    */
   logRetentionDays: number;
   /** Show dotfiles and dot-directories in the explorer file tree. */
