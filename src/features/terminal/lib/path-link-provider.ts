@@ -2,6 +2,7 @@ import type { Terminal, ILink, ILinkProvider } from "@xterm/xterm";
 import { invoke } from "@tauri-apps/api/core";
 import { openFileOrReveal } from "@/lib/open-file";
 import { splitLinks, normalizeUrl } from "./linkify-paths";
+import { cellColumn } from "./buffer-columns";
 
 /**
  * xterm link provider that makes URLs and file paths in terminal output
@@ -68,8 +69,8 @@ export function createPathLinkProvider(term: Terminal, terminalId: string): ILin
         links.push({
           text: raw,
           range: {
-            start: { x: startX + 1, y: lineNo },
-            end: { x: endX, y: lineNo },
+            start: { x: cellColumn(line, startX, term.cols) + 1, y: lineNo },
+            end: { x: cellColumn(line, endX, term.cols), y: lineNo },
           },
           decorations: decor(),
           activate: (event) => {

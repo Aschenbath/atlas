@@ -30,7 +30,7 @@
  */
 import { Channel, invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
-import type { IBufferLine, Terminal } from "@xterm/xterm";
+import type { Terminal } from "@xterm/xterm";
 import type { FitAddon } from "@xterm/addon-fit";
 import type { WebglAddon } from "@xterm/addon-webgl";
 import { onThemeApplied } from "@/features/theme/theme-values";
@@ -40,6 +40,7 @@ import { ShellIntegration } from "./shell-integration";
 import { createTerminalEventSink } from "./terminal-notifier";
 import { createTerminalKeymap } from "./terminal-keymap";
 import { createPathLinkProvider } from "./path-link-provider";
+import { cellColumn } from "./buffer-columns";
 import { resolveTerminalFont } from "../utils/resolve-font";
 import {
   appliedTerminalFont,
@@ -709,20 +710,6 @@ export class TerminalSession {
     this.findIdx = -1;
     this.xterm?.clearSelection();
   }
-}
-
-/** The cell column at which offset `offset` of `translateToString` falls:
- *  that string has one entry per glyph (a wide glyph's spacer cell is
- *  skipped), while columns count cells. */
-function cellColumn(line: IBufferLine, offset: number, cols: number): number {
-  let seen = 0;
-  for (let x = 0; x < cols; x++) {
-    const cell = line.getCell(x);
-    if (!cell || cell.getWidth() === 0) continue;
-    if (seen >= offset) return x;
-    seen += cell.getChars().length || 1;
-  }
-  return cols;
 }
 
 // ── Registry ───────────────────────────────────────────────────────────────
